@@ -21,16 +21,16 @@ const config = {
     },
     extend: {
       fontSize: {
-        "10": ["10px", { lineHeight: "14px" }],
-        "12": ["12px", { lineHeight: "16px" }],
-        "14": ["14px", { lineHeight: "20px" }],
-        "16": ["16px", { lineHeight: "24px" }],
-        "18": ["18px", { lineHeight: "22px" }],
-        "20": ["20px", { lineHeight: "24px" }],
-        "24": ["24px", { lineHeight: "30px" }],
-        "26": ["26px", { lineHeight: "32px" }],
-        "30": ["30px", { lineHeight: "38px" }],
-        "36": ["36px", { lineHeight: "44px" }],
+        "10": { fontSize: "10px", lineHeight: "14px" }, 
+        "12": { fontSize: "12px", lineHeight: "16px" },
+        "14": { fontSize: "14px", lineHeight: "20px" },
+        "16": { fontSize: "16px", lineHeight: "24px" },
+        "18": { fontSize: "18px", lineHeight: "22px" },
+        "20": { fontSize: "20px", lineHeight: "24px" },
+        "24": { fontSize: "24px", lineHeight: "30px" },
+        "26": { fontSize: "26px", lineHeight: "32px" },
+        "30": { fontSize: "30px", lineHeight: "38px" },
+        "36": { fontSize: "36px", lineHeight: "44px" },
       },
       colors: {
         fill: {
