@@ -22,6 +22,7 @@ import { Loader2 } from 'lucide-react'
 import { signIn, signUp } from '@/lib/actions/user.actions'
 import { authFormSchema } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
+import PlaidLink from './PlaidLink'
 
 const formSchema = z.object({
   title: z
@@ -54,10 +55,13 @@ const AuthForm = ({type}:{type: "sign-in" | "sign-up"}) => {
     })
    
     // 2. Define a submit handler.
+   // 2. Define a submit handler.
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
       setIsLoading(true);
 
       try {
+        // Sign up with Appwrite & create plaid token
+        
         if(type === 'sign-up') {
           const userData = {
             firstName: data.firstName!,
@@ -73,10 +77,8 @@ const AuthForm = ({type}:{type: "sign-in" | "sign-up"}) => {
           }
 
           const newUser = await signUp(userData);
-          setUser(newUser);
 
-          // AJOUT : Redirection si l'inscription réussit
-          if(newUser) router.push('/')
+          setUser(newUser);
         }
 
         if(type === 'sign-in') {
@@ -84,16 +86,11 @@ const AuthForm = ({type}:{type: "sign-in" | "sign-up"}) => {
             email: data.email,
             password: data.password,
           })
-            // Log pour vérifier que tu reçois bien l'utilisateur
-          console.log("Réponse du serveur:", response);
-          if(response) {
-            // AJOUT : refresh() aide Next.js à voir le nouveau cookie de session
-            router.refresh(); 
-            router.push('/');
-          }
+
+          if(response) router.push('/')
         }
       } catch (error) {
-        console.log("Erreur lors de l'authentification :", error);
+        console.log(error);
       } finally {
         setIsLoading(false);
       }
@@ -119,9 +116,9 @@ const AuthForm = ({type}:{type: "sign-in" | "sign-up"}) => {
                 </h1>
           </div>
         </header>
-        { user ?(
-            <div className="flex flex-col">
-               { /*PlaidLink*/} 
+         {user ?(
+            <div className="flex flex-col gap-4">
+               <PlaidLink user={user} variant='primary'/>
             </div>
         ):(<>
             <Form {...form}>
@@ -171,7 +168,7 @@ const AuthForm = ({type}:{type: "sign-in" | "sign-up"}) => {
                           {type === 'sign-in' ? 'Sign Up' : 'Sign In'}
                       </Link>
                  </footer>
-            </>)}
+            </> )}
 
     </section>
   )
